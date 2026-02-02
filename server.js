@@ -162,10 +162,12 @@ app.post("/buy", auth, async (req, res) => {
 })
 
 /* =========================
-   👥 MEUS INDICADOS
+   🤝 MEUS INDICADOS
 ========================= */
 app.get("/me/referrals", auth, (req, res) => {
   const user = db.data.users.find(u => u.id === req.user.id)
+
+  if (!user) return res.status(404).json({ error: "Usuário não encontrado" })
 
   const people = user.referrals.map(id => {
     const u = db.data.users.find(x => x.id === id)
@@ -184,6 +186,8 @@ app.get("/me/referrals", auth, (req, res) => {
 ========================= */
 app.get("/me/balance", auth, (req, res) => {
   const user = db.data.users.find(u => u.id === req.user.id)
+  if (!user) return res.status(404).json({ error: "Usuário não encontrado" })
+
   res.json({ saldo: user.balance })
 })
 
@@ -195,5 +199,11 @@ app.get("/me/purchases", auth, (req, res) => {
   res.json(list)
 })
 
-// ====== SERVIDOR ======
-app.listen(3000, () => console.log("🔥 MTK SHOPPING VERSÃO FINAL RODANDO NA PORTA 3000"))
+/* =========================
+   🚀 SERVIDOR
+========================= */
+const PORT = process.env.PORT || 3000
+
+app.listen(PORT, "0.0.0.0", () => {
+  console.log(`🔥 MTK SHOPPING API rodando na porta ${PORT}`)
+})
