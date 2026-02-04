@@ -204,5 +204,6 @@ app.get("/me/purchases", auth, (req, res) => {
 ========================= */
 const PORT = process.env.PORT || 3000
 
-app.listen(PORT, () => console.log(`🔥 MTK SHOPPING API rodando na porta ${PORT}`))
-
+app.listen(PORT, () => {
+  console.log("🔥 MTK SHOPPING API rodando na porta " + PORT)
+})
